@@ -1,0 +1,61 @@
+{
+  "recipes": [
+    {
+      "name": "Houmous de betterave",
+      "ingredients": [
+        "1 betterave cuite pelée",
+        "1 yaourt au soja",
+        "1 gousse d'ail",
+        "Jus de citron",
+        "Kasha",
+        "Poivre"
+      ],
+      "recipe": "Mixer la betterave, le yaourt, la gousse d'ail\nAjouter du jus de citron et du poivre\nAjouter du kasha"
+    },
+    {
+      "name": "Pâtes aux courgettes",
+      "ingredients": [
+        "2 courgettes",
+        "100g de pâtes",
+        "1 gousse d'ail",
+        "1 cc de Cumin",
+        "1 cc de Coriandre",
+        "4 cs d'huile d'olive",
+        "1/2 cc de Curcuma",
+        "1/2 cc de Poivre",
+        "1 cs d'herbes de Provence",
+        "Jus d'1/2 citron",
+        "Sel"
+      ],
+      "recipe": "Peler et tailler en lamelle les courgettes\nFaire la marinade avec l'ail, le cumin, la coriandre, l'huile, le curcuma, le poivre, les herbes et le citron\nLaisser reposer le tout une nuit\nLe lendemain, cuire les pates, verser la marinade\nManger !"
+    },
+    {
+      "name": "Salade antioxydante",
+      "ingredients": [
+        "1/4 de chou rouge",
+        "1 chou rave",
+        "1 mangue",
+        "1 poivron rouge",
+        "1 échalote",
+        "1 citron",
+        "2cs d'huile",
+        "Sel",
+        "Poivre"
+      ],
+      "recipe": "Couper le chou, Peler et couper le chou rave en lamelle, \nCouper la mangue en cube, couper le poivron, couper l'echalotte\nMelanger le jus de ciitron et l'huile\nMelanger le tout\nManger !"
+    },
+    {
+      "name": "Gratin de courge",
+      "ingredients": [
+        "1 Courge butternut",
+        "1 cs d'huile d'olive",
+        "50g de fromage rapé",
+        "2 pincées de Muscade",
+        "1 oignon",
+        "Sel",
+        "Poivre"
+      ],
+      "recipe": "Couper la courge en 2, couvrir de papier alu et mettre au four 45 minutes\nCouper et cuire l'oignon\nSortir la courge du four, creuser la chaire\nMelanger la chair avec tout le reste\nRemettre au four 15 minutes"
+    }
+  ]
+}
