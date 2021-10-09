@@ -6,13 +6,20 @@ import reportWebVitals                            from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { initConfig }                             from "./service/config/config";
 import { Home }                                   from "./feature/home/Home";
+import { Template }                               from "./feature/home/components/layout/Template";
+import { Ingredients }                            from "./feature/home/components/ingredient/Ingredients";
+import { Recipes }                                from "./feature/home/components/recipe/Recipes";
 
 const AppWrapper = () => {
     return (
         <Router>
+            <Template>
                 <Switch>
+                    <Route path="/ingredient" component={Ingredients}/>
+                    <Route path="/recipe" component={Recipes}/>
                     <Route path="/" component={Home}/>
                 </Switch>
+            </Template>
         </Router>
     )
 }
