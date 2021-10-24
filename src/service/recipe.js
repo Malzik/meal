@@ -19,8 +19,9 @@ export const recipeApi = {
                     if(res.status >= 300) {
                         reject(res.statusText)
                     }
-                    resolve(res)
+                    return res.json()
                 })
+                .then(res => resolve(res))
                 .catch(err => reject(err))
         }),
     updateRecipe: (id, name) =>

@@ -35,7 +35,23 @@ export const Recipes = () => {
     useEffect(() => {
         recipeApi
             .getRecipes()
-            .then(result => setRecipes(result))
+            .then(result => {
+                setRecipes(result.map(recipe => {
+                    return ({
+                            id: recipe.id,
+                            name: recipe.name,
+                            ingredients: recipe.ingredients.map(ingredient => {
+                                return ({
+                                    id: ingredient.id,
+                                    name: ingredient.name,
+                                    quantity: ingredient.recipe_ingredient.quantity,
+                                    unit: ingredient.recipe_ingredient.unit,
+                                })
+                            })
+                        })
+                    }
+                ))
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -47,19 +63,23 @@ export const Recipes = () => {
     }
 
     const renderIngredient = ingredient => {
-        if (ingredient.recipe_ingredient.unit === null) {
+        if (ingredient.unit === null) {
             return (
-                <div>{ingredient.name} * {ingredient.recipe_ingredient.quantity}</div>
+                <div key={ingredient.id}>{ingredient.name} * {ingredient.quantity}</div>
             )
         }
         return (
-            <div>{ingredient.name} - {ingredient.recipe_ingredient.quantity}&nbsp;{ingredient.recipe_ingredient.unit}</div>
+            <div key={ingredient.id}>{ingredient.name} - {ingredient.quantity}&nbsp;{ingredient.unit}</div>
         )
+    }
+
+    const addRecipe = newRecipe => {
+        setRecipes(recipes.map(recipe => recipe.id === newRecipe.id ? newRecipe : recipe))
     }
 
     return (
         <>
-            <Recipe title={"Ajouter une recette"} buttonText={"Ajouter"} />
+            <Recipe title={"Ajouter une recette"} buttonText={"Ajouter"} addRecipe={addRecipe}/>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>

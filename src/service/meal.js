@@ -8,13 +8,13 @@ export const mealApi = {
                 .then(res =>resolve(res))
                 .catch(err => reject(err))
         }),
-    addMeal: (title, date, meals) =>
+    addMeal: (title, date, recipes) =>
         new Promise((resolve, reject) => {
             requestApi
                 .post("meal", {
                     title: title,
                     date: date,
-                    meals: meals
+                    recipes: recipes
                 })
                 .then(res =>{
                     if(res.status >= 300) {

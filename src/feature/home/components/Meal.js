@@ -1,21 +1,54 @@
 import React, { useState } from "react";
 import './Meal.css';
-import Select                         from "react-select";
-import makeAnimated                   from "react-select/animated";
+import FormControl         from "@mui/material/FormControl";
+import InputLabel          from "@mui/material/InputLabel";
+import Select              from "@mui/material/Select";
+import MenuItem            from "@mui/material/MenuItem";
+import OutlinedInput       from "@mui/material/OutlinedInput";
 
-export const Meal = ({title, meals}) => {
-    const animatedComponents = makeAnimated();
-    const [mealList] = useState(meals);
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 100,
+        },
+    },
+};
+
+export const Meal = ({title, recipes}) => {
+    const [recipesList, ] = useState(recipes);
+    const [selectedRecipes, setSelectedRecipes] = useState([])
+
+    const handleChange = () => {
+
+    }
 
     return (
         <div className="meal">
             <div>{title}</div>
-            <Select
-                closeMenuOnSelect={false}
-                components={animatedComponents}
-                isMulti
-                options={mealList}
-            />
+            <FormControl sx={{ m: 1 }}>
+                <InputLabel id="demo-multiple-name-label">Recettes</InputLabel>
+                <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    multiple
+                    value={selectedRecipes}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Name" />}
+                    MenuProps={MenuProps}
+                >
+                    {recipesList.map(recipe => (
+                        <MenuItem
+                            key={recipe.id}
+                            value={recipe.name}
+                        >
+                            {recipe.name}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
         </div>
     )
 }

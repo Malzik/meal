@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import './Schedule.css'
 import { Meal }                       from "./Meal";
 import { mealApi }                    from "../../../service/meal";
+import { recipeApi }                  from "../../../service/recipe";
 
 export const Schedule = () => {
-    const [meals, setMeals] = useState ([])
+    const [recipes, setRecipes] = useState ([])
     const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche']
     const mealNames = ['PDJ', 'Midi', 'Soir']
 
     useEffect(() => {
-        mealApi.getMeals()
+        recipeApi.getRecipes()
             .then((result) => {
-                    setMeals(result)
+                    setRecipes(result)
                 },
             )
     }, [])
@@ -26,9 +27,9 @@ export const Schedule = () => {
         return (
             <div className="day" key={key}>
                 <div className="day-border">{day}</div>
-                <Meal title={"Matin"} meals={meals}/>
-                <Meal title={"Midi"} meals={meals}/>
-                <Meal title={"Soir"} meals={meals}/>
+                <Meal title={"Matin"} recipes={recipes}/>
+                <Meal title={"Midi"} recipes={recipes}/>
+                <Meal title={"Soir"} recipes={recipes}/>
             </div>
         );
     }
@@ -39,10 +40,14 @@ export const Schedule = () => {
 
     return (
         <div>
-            <div className="grid-container">
-                {renderMealName()}
-                {renderDays()}
-            </div>
+            {
+                recipes.length > 0 ? (
+                    <div className="grid-container">
+                        {renderMealName()}
+                        {renderDays()}
+                    </div>
+                ) : null
+            }
         </div>
     )
 }
