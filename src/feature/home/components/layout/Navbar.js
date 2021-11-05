@@ -1,40 +1,60 @@
-import * as React from 'react';
-import AppBar     from '@mui/material/AppBar';
-import Box        from '@mui/material/Box';
-import Toolbar    from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button     from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon   from '@mui/icons-material/Menu';
-import Link       from "@mui/material/Link";
+import React from "react";
 
-export function Navbar() {
+export const Navbar = ({ fixed }) => {
+    const [navbarOpen, setNavbarOpen] = React.useState(false);
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
+        <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-indigo-500 mb-3">
+            <div className="container px-4 mx-auto flex flex-wrap items-center justify-between">
+                <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
+                    <a
+                        className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-white"
+                        href="#pablo"
                     >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        <Button href="/" variant="contained">
-                            Home
-                        </Button>
-                        <Button href="/ingredient" variant="contained">
-                            Ingredient
-                        </Button>
-                        <Button href="/recipe" variant="contained">
-                            Recette
-                        </Button>
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-        </Box>
+                        indigo Tailwind Starter Kit
+                    </a>
+                    <button
+                        className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
+                        type="button"
+                        onClick={() => setNavbarOpen(!navbarOpen)}
+                    >
+                        <i className="fas fa-bars"></i>
+                    </button>
+                </div>
+                <div
+                    className={
+                        "lg:flex flex-grow items-center" +
+                        (navbarOpen ? " flex" : " hidden")
+                    }
+                    id="example-navbar-danger"
+                >
+                    <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
+                        <li className="nav-item">
+                            <a
+                                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="#pablo"
+                            >
+                                <i className="fab fa-facebook-square text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Share</span>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a
+                                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="#pablo"
+                            >
+                                <i className="fab fa-twitter text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Tweet</span>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a
+                                className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="#pablo"
+                            >
+                                <i className="fab fa-pinterest text-lg leading-lg text-white opacity-75"></i><span className="ml-2">Pin</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     );
 }

@@ -3,7 +3,6 @@ import ReactDOM                                   from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import reportWebVitals                            from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { initConfig }                             from "./service/config/config";
 import { Home }                                   from "./feature/home/Home";
 import { Template }                               from "./feature/home/components/layout/Template";

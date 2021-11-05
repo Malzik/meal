@@ -1,13 +1,3 @@
-import FormControl   from "@mui/material/FormControl";
-import InputLabel    from "@mui/material/InputLabel";
-import Select        from "@mui/material/Select";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import Box           from "@mui/material/Box";
-import Chip          from "@mui/material/Chip";
-import MenuItem      from "@mui/material/MenuItem";
-import Checkbox      from "@mui/material/Checkbox";
-import ListItemText  from "@mui/material/ListItemText";
-import TextField           from "@mui/material/TextField";
 import React, { useState } from "react";
 
 const ITEM_HEIGHT = 48;
@@ -41,50 +31,50 @@ export const RecipeIngredient = ({index, ingredients, selectIngredient, updateIn
 
     return (
         <>
-            <FormControl sx={{ m: 1, width: 300 }}>
-                <InputLabel id="demo-multiple-name-label">Choisissez un ingrédient</InputLabel>
-                <Select
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
-                    value={ingredient.name}
-                    onChange={e => updateSelectedIngredients(e.target.value)}
-                    input={<OutlinedInput label="Name" />}
-                    renderValue={(selected) => {
-                        return (
-                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                <Chip key={selected} label={selected} />
-                            </Box>
-                        )
-                    }
-                    }
-                    MenuProps={MenuProps}
-                >
-                    {ingredients.map(selectIngredient => (
-                        <MenuItem key={selectIngredient.id} value={selectIngredient.name}>
-                            <Checkbox checked={selectIngredient.name === ingredient.name} />
-                            <ListItemText primary={selectIngredient.name} />
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-            <TextField
-                id="quantity"
-                label="Quantité"
-                variant="outlined"
-                type="number"
-                value={ingredient.quantity}
-                onChange={e => updateSelectedIngredientsQuantity(e.target.value)}
-                InputLabelProps={{
-                    shrink: true,
-                }}
-            />
-            <TextField
-                id="unit"
-                label="Unité"
-                variant="outlined"
-                value={ingredient.unit}
-                onChange={e => updateSelectedIngredientsUnit(e.target.value)}
-            />
+            {/*<FormControl sx={{ m: 1, width: 300 }}>*/}
+            {/*    <InputLabel id="demo-multiple-name-label">Choisissez un ingrédient</InputLabel>*/}
+            {/*    <Select*/}
+            {/*        labelId="demo-multiple-name-label"*/}
+            {/*        id="demo-multiple-name"*/}
+            {/*        value={ingredient.name}*/}
+            {/*        onChange={e => updateSelectedIngredients(e.target.value)}*/}
+            {/*        input={<OutlinedInput label="Name" />}*/}
+            {/*        renderValue={(selected) => {*/}
+            {/*            return (*/}
+            {/*                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>*/}
+            {/*                    <Chip key={selected} label={selected} />*/}
+            {/*                </Box>*/}
+            {/*            )*/}
+            {/*        }*/}
+            {/*        }*/}
+            {/*        MenuProps={MenuProps}*/}
+            {/*    >*/}
+            {/*        {ingredients.map(selectIngredient => (*/}
+            {/*            <MenuItem key={selectIngredient.id} value={selectIngredient.name}>*/}
+            {/*                <Checkbox checked={selectIngredient.name === ingredient.name} />*/}
+            {/*                <ListItemText primary={selectIngredient.name} />*/}
+            {/*            </MenuItem>*/}
+            {/*        ))}*/}
+            {/*    </Select>*/}
+            {/*</FormControl>*/}
+            {/*<TextField*/}
+            {/*    id="quantity"*/}
+            {/*    label="Quantité"*/}
+            {/*    variant="outlined"*/}
+            {/*    type="number"*/}
+            {/*    value={ingredient.quantity}*/}
+            {/*    onChange={e => updateSelectedIngredientsQuantity(e.target.value)}*/}
+            {/*    InputLabelProps={{*/}
+            {/*        shrink: true,*/}
+            {/*    }}*/}
+            {/*/>*/}
+            {/*<TextField*/}
+            {/*    id="unit"*/}
+            {/*    label="Unité"*/}
+            {/*    variant="outlined"*/}
+            {/*    value={ingredient.unit}*/}
+            {/*    onChange={e => updateSelectedIngredientsUnit(e.target.value)}*/}
+            {/*/>*/}
         </>
     )
 }

@@ -1,19 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button            from '@mui/material/Button';
-import TextField         from "@mui/material/TextField";
-import Box               from "@mui/material/Box";
-import Modal             from "@mui/material/Modal";
-import Icon                 from "@mui/material/Icon";
 import { recipeApi }        from "../../../../service/recipe";
-import Select               from '@mui/material/Select';
 import { ingredientApi }    from "../../../../service/ingredient";
-import MenuItem             from "@mui/material/MenuItem";
-import OutlinedInput        from "@mui/material/OutlinedInput";
-import Checkbox             from "@mui/material/Checkbox";
-import ListItemText         from "@mui/material/ListItemText";
-import Chip                 from "@mui/material/Chip";
-import InputLabel           from "@mui/material/InputLabel";
-import FormControl          from "@mui/material/FormControl";
 import { RecipeIngredient } from "./RecipeIngredient";
 
 const style = {
@@ -90,36 +77,36 @@ export const Recipe = ({title, buttonText, recipe, addRecipe}) => {
     }
     return (
         <>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <TextField
-                        id="outlined-error"
-                        label="Nom"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
-                    {
-                        ingredientsSelected.map((ingredientSelected, key) => {
-                            return (
-                                <div key={key}>
-                                    <RecipeIngredient index={key} ingredients={ingredients} selectIngredient={ingredientSelected} updateIngredient={updateIngredient}/>
-                                </div>)
-                        })
-                    }
-                    <Button variant="contained" color="success" onClick={() => addIngredient()}>
-                        <Icon>add_circle</Icon>&nbsp;Ajouter un ingredient
-                    </Button>
-                    <Button variant="contained" color="success" onClick={() => createRecipe()}>
-                        <Icon>add_circle</Icon>&nbsp;{buttonText}
-                    </Button>
-                </Box>
-            </Modal>
-            <Button variant="contained" onClick={handleOpen}>{title}</Button>
+            {/*<Modal*/}
+            {/*    open={open}*/}
+            {/*    onClose={handleClose}*/}
+            {/*    aria-labelledby="modal-modal-title"*/}
+            {/*    aria-describedby="modal-modal-description"*/}
+            {/*>*/}
+            {/*    <Box sx={style}>*/}
+            {/*        <TextField*/}
+            {/*            id="outlined-error"*/}
+            {/*            label="Nom"*/}
+            {/*            value={name}*/}
+            {/*            onChange={e => setName(e.target.value)}*/}
+            {/*        />*/}
+            {/*        {*/}
+            {/*            ingredientsSelected.map((ingredientSelected, key) => {*/}
+            {/*                return (*/}
+            {/*                    <div key={key}>*/}
+            {/*                        <RecipeIngredient index={key} ingredients={ingredients} selectIngredient={ingredientSelected} updateIngredient={updateIngredient}/>*/}
+            {/*                    </div>)*/}
+            {/*            })*/}
+            {/*        }*/}
+            {/*        <Button variant="contained" color="success" onClick={() => addIngredient()}>*/}
+            {/*            <Icon>add_circle</Icon>&nbsp;Ajouter un ingredient*/}
+            {/*        </Button>*/}
+            {/*        <Button variant="contained" color="success" onClick={() => createRecipe()}>*/}
+            {/*            <Icon>add_circle</Icon>&nbsp;{buttonText}*/}
+            {/*        </Button>*/}
+            {/*    </Box>*/}
+            {/*</Modal>*/}
+            {/*<Button variant="contained" onClick={handleOpen}>{title}</Button>*/}
         </>
     )
 }

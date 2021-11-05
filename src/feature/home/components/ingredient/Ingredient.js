@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-import Button                         from '@mui/material/Button';
-import TextField           from "@mui/material/TextField";
-import Box                 from "@mui/material/Box";
-import Modal               from "@mui/material/Modal";
-import Icon              from "@mui/material/Icon";
 import { ingredientApi } from "../../../../service/ingredient";
 
 const style = {
@@ -43,25 +38,25 @@ export const Ingredient = ({title, buttonText, ingredient, updateName}) => {
 
     return (
         <>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <TextField
-                        id="outlined-error"
-                        label="Nom"
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                    />
-                    <Button variant="contained" color="success" onClick={() => createIngredient()}>
-                        <Icon>add_circle</Icon>&nbsp;{buttonText}
-                    </Button>
-                </Box>
-            </Modal>
-            <Button variant="contained" onClick={handleOpen}>{title}</Button>
+            {/*<Modal*/}
+            {/*    open={open}*/}
+            {/*    onClose={handleClose}*/}
+            {/*    aria-labelledby="modal-modal-title"*/}
+            {/*    aria-describedby="modal-modal-description"*/}
+            {/*>*/}
+            {/*    <Box sx={style}>*/}
+            {/*        <TextField*/}
+            {/*            id="outlined-error"*/}
+            {/*            label="Nom"*/}
+            {/*            value={name}*/}
+            {/*            onChange={e => setName(e.target.value)}*/}
+            {/*        />*/}
+            {/*        <Button variant="contained" color="success" onClick={() => createIngredient()}>*/}
+            {/*            <Icon>add_circle</Icon>&nbsp;{buttonText}*/}
+            {/*        </Button>*/}
+            {/*    </Box>*/}
+            {/*</Modal>*/}
+            {/*<Button variant="contained" onClick={handleOpen}>{title}</Button>*/}
         </>
     )
 }
