@@ -1,62 +1,71 @@
 import React, { useState } from "react";
 import { ingredientApi } from "../../../../service/ingredient";
+import {Modal} from "../layout/Modal";
+import {FaPlusCircle} from "react-icons/fa";
 
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-export const Ingredient = ({title, buttonText, ingredient, updateName}) => {
+export const Ingredient = ({title, buttonText, ingredient, updateIngredients, navBarClassName}) => {
     const [open, setOpen] = useState(false)
+    const [name, setName] = useState(ingredient !== undefined ? ingredient.name : '')
+
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    const [name, setName] = useState(ingredient !== undefined ? ingredient.name : "")
+    const handleClose = () => {
+        setOpen(false);
+        if (ingredient === undefined) {
+            setName('')
+        }
+    }
+    const handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            createIngredient()
+        }
+    }
 
     const createIngredient = () => {
-        if (ingredient.id !== undefined) {
+        if (ingredient !== undefined && ingredient.id !== undefined) {
             ingredientApi
                 .updateIngredient(ingredient.id, name)
                 .then(result => {
-                    updateName(result)
+                    updateIngredients(result)
                     handleClose()
                 })
                 .catch(err => console.log(err))
         } else {
             ingredientApi
                 .addIngredient(name)
-                .then(result => console.log(result))
+                .then(result => {
+                    handleClose()
+                    updateIngredients(result, true)
+                })
                 .catch(err => console.log(err))
         }
     }
 
     return (
         <>
-            {/*<Modal*/}
-            {/*    open={open}*/}
-            {/*    onClose={handleClose}*/}
-            {/*    aria-labelledby="modal-modal-title"*/}
-            {/*    aria-describedby="modal-modal-description"*/}
-            {/*>*/}
-            {/*    <Box sx={style}>*/}
-            {/*        <TextField*/}
-            {/*            id="outlined-error"*/}
-            {/*            label="Nom"*/}
-            {/*            value={name}*/}
-            {/*            onChange={e => setName(e.target.value)}*/}
-            {/*        />*/}
-            {/*        <Button variant="contained" color="success" onClick={() => createIngredient()}>*/}
-            {/*            <Icon>add_circle</Icon>&nbsp;{buttonText}*/}
-            {/*        </Button>*/}
-            {/*    </Box>*/}
-            {/*</Modal>*/}
-            {/*<Button variant="contained" onClick={handleOpen}>{title}</Button>*/}
+            <Modal open={open} handleClose={handleClose} title={title}>
+                <div className="p-6">
+                    <div className="border-4 border-gray rounded-full w-full">
+                        <input type={"text"} value={name} onChange={e => setName(e.target.value)} placeholder={"Nom de l'ingrédient..."} className={"m-2 w-[95%] focus:outline-none"} onKeyDown={handleKeyDown}/>
+                    </div>
+                </div>
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                    <button
+                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => handleClose()}
+                    >
+                        Fermer
+                    </button>
+                    <button
+                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => createIngredient()}
+                    >
+                        <FaPlusCircle className={"inline"} />&nbsp;{buttonText}
+                    </button>
+                </div>
+            </Modal>
+            <button className={navBarClassName + " rounded-none"} onClick={handleOpen}>{title}</button>
         </>
     )
 }

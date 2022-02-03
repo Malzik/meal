@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .left-panel {
+        display: grid;
+        grid-template-columns: minmax(50px, max-content) 1fr;
+        grid-template-rows: minmax(40px, max-content) 1fr;
+        gap: 2px 2px;
+    }
+
+    .days {
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+    }
+
+    .arrow {
+        display: flex;
+        justify-content: center;
+        padding-top: 3px;
+    }
+
+    .meals {
+        display: grid;
+        grid-template-rows: repeat(3, 1fr);
+    }
+
+    .meal-name {
+        writing-mode: sideways-lr;
+        min-height: 225px;
+    }
+
+    .meal-title {
+        color: #404040;
+    }
+
+    .ingredients-title {
+        color: #969696;
+    }
+
+    .font-width {
+        height: 45px;
+        width: 45px;
+    }
+
+    .muuri-item-dragging {
+        border: 1px solid red;
+    }
+    .muuri-rightpanel-grid {
+        @apply grid grid-cols-2 gap-2 pt-4 h-2/3
+     }
+
+    .muuri-leftpanel-flex {
+        @apply flex justify-around items-center border-b-2 h-full
+     }
+
+    .navbar-dropdown-title {
+        @apply hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium
+    }
+
+    .navbar-title {
+        @apply hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium
+    }
+
+    .ingredients-table-th {
+        @apply text-sm font-bold py-4 text-left
+    }
+
+    .ingredients-table-line {
+        @apply bg-white border-b transition duration-300 ease-in-out hover:bg-gray-200
+    }
+
+    .ingredients-table-line > th, td {
+        @apply py-4
+    }
+}

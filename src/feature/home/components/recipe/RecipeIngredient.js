@@ -1,80 +1,43 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-        },
-    },
-};
+export const RecipeIngredient = ({index, ingredients, selectIngredient, updateIngredient, deleteIngredient}) => {
+    const [ingredient, setIngredient] = useState({})
 
-export const RecipeIngredient = ({index, ingredients, selectIngredient, updateIngredient}) => {
-    const [ingredient, setIngredient] = useState(selectIngredient);
+    useEffect(() => {
+        setIngredient(selectIngredient)
+    }, [selectIngredient])
 
-    const updateSelectedIngredients = (value) => {
-        setIngredient({...ingredient, name: value})
-        updateIngredient(index, {...ingredient, name: value})
+    const updateSelectedIngredients = (e) => {
+        setIngredient({...ingredient, name: e.target.value})
+        updateIngredient(index, {...selectIngredient, name: e.target.value})
     }
 
     const updateSelectedIngredientsQuantity = (value) => {
-        setIngredient({...ingredient, quantity: parseInt(value)})
-        updateIngredient(index, {...ingredient, quantity: parseInt(value)})
+        setIngredient({...ingredient, quantity: value})
+        updateIngredient(index, {...selectIngredient, quantity: parseFloat(value)})
     }
 
     const updateSelectedIngredientsUnit = (value) => {
         setIngredient({...ingredient, unit: value})
-        updateIngredient(index, {...ingredient, unit: value})
+        updateIngredient(index, {...selectIngredient, unit: value})
     }
 
     return (
-        <>
-            {/*<FormControl sx={{ m: 1, width: 300 }}>*/}
-            {/*    <InputLabel id="demo-multiple-name-label">Choisissez un ingrédient</InputLabel>*/}
-            {/*    <Select*/}
-            {/*        labelId="demo-multiple-name-label"*/}
-            {/*        id="demo-multiple-name"*/}
-            {/*        value={ingredient.name}*/}
-            {/*        onChange={e => updateSelectedIngredients(e.target.value)}*/}
-            {/*        input={<OutlinedInput label="Name" />}*/}
-            {/*        renderValue={(selected) => {*/}
-            {/*            return (*/}
-            {/*                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>*/}
-            {/*                    <Chip key={selected} label={selected} />*/}
-            {/*                </Box>*/}
-            {/*            )*/}
-            {/*        }*/}
-            {/*        }*/}
-            {/*        MenuProps={MenuProps}*/}
-            {/*    >*/}
-            {/*        {ingredients.map(selectIngredient => (*/}
-            {/*            <MenuItem key={selectIngredient.id} value={selectIngredient.name}>*/}
-            {/*                <Checkbox checked={selectIngredient.name === ingredient.name} />*/}
-            {/*                <ListItemText primary={selectIngredient.name} />*/}
-            {/*            </MenuItem>*/}
-            {/*        ))}*/}
-            {/*    </Select>*/}
-            {/*</FormControl>*/}
-            {/*<TextField*/}
-            {/*    id="quantity"*/}
-            {/*    label="Quantité"*/}
-            {/*    variant="outlined"*/}
-            {/*    type="number"*/}
-            {/*    value={ingredient.quantity}*/}
-            {/*    onChange={e => updateSelectedIngredientsQuantity(e.target.value)}*/}
-            {/*    InputLabelProps={{*/}
-            {/*        shrink: true,*/}
-            {/*    }}*/}
-            {/*/>*/}
-            {/*<TextField*/}
-            {/*    id="unit"*/}
-            {/*    label="Unité"*/}
-            {/*    variant="outlined"*/}
-            {/*    value={ingredient.unit}*/}
-            {/*    onChange={e => updateSelectedIngredientsUnit(e.target.value)}*/}
-            {/*/>*/}
-        </>
+        <div className={"px-2 pb-2 m-2 border-2 rounded"}>
+            <div className={"flex align-end"}>
+                <span className={"ml-auto text-gray-500 arrow cursor-pointer"} onClick={() => deleteIngredient(index)}>×</span>
+            </div>
+            <select value={ingredient.name} onChange={updateSelectedIngredients} className={"w-full rounded bg-white border border-solid border-gray-300 p-2"}>
+                {ingredients.map(ingredient => <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>)}
+            </select>
+            <div className="flex flex-wrap">
+                <div className="border-4 my-2 border-gray rounded w-full md:w-1/2">
+                    <input type={"number"} value={ingredient.quantity || 0} onChange={e => updateSelectedIngredientsQuantity(e.target.value)} placeholder={"Quantité"} className={"m-2 w-[95%] focus:outline-none"}/>
+                </div>
+                <div className="border-4 my-2 border-gray rounded w-full md:w-1/2">
+                    <input value={ingredient.unit || ''} onChange={e => updateSelectedIngredientsUnit(e.target.value)} placeholder={"Unité"} className={"m-2 w-[95%] focus:outline-none"}/>
+                </div>
+            </div>
+        </div>
     )
 }
