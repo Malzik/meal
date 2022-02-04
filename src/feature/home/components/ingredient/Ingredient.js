@@ -65,7 +65,7 @@ export const Ingredient = ({title, buttonText, ingredient, updateIngredients, na
                     </button>
                 </div>
             </Modal>
-            <button className={navBarClassName + " rounded-none"} onClick={handleOpen}>{title}</button>
+            <button className={navBarClassName} onClick={handleOpen}>{title}</button>
         </>
     )
 }

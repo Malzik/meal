@@ -48,7 +48,7 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
                                 </a>
                                 <NavLink to="/ingredients" className={"navbar-title"}>Ingredients</NavLink>
                                 <NavLink to="/recipes" className={"navbar-title"}>Recette</NavLink>
-                                <Ingredient title={"Ajouter un ingrédient"} buttonText={"Ajouter"} updateIngredients={updateIngredients} navBarClassName={"navbar-title border-l-2"}/>
+                                <Ingredient title={"Ajouter un ingrédient"} buttonText={"Ajouter"} updateIngredients={updateIngredients} navBarClassName={"navbar-title "}/>
                                 <Recipe title={"Ajouter une recette"} buttonText={"Ajouter"} addRecipe={addRecipe} navBarClassName={"navbar-title"} ingredients={ingredients}/>
                             </div>
                         </div>

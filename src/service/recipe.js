@@ -1,4 +1,5 @@
 import { requestApi } from "./request";
+import {toast} from "react-hot-toast";
 
 export const recipeApi = {
     getRecipes: () =>
@@ -19,6 +20,7 @@ export const recipeApi = {
                     if(res.status >= 300) {
                         reject(res.statusText)
                     }
+                    toast.success('Recette ' + name + ' ajoutée')
                     return res.json()
                 })
                 .then(res => resolve(res))
@@ -34,6 +36,8 @@ export const recipeApi = {
                     if(res.status >= 300) {
                         reject(res.statusText)
                     }
+                    console.log(name)
+                    toast.success('Recette ' + name + ' mise à jour')
                     return res.json()
                 })
                 .then(res => resolve(res))
@@ -47,6 +51,7 @@ export const recipeApi = {
                     if(res.status >= 300) {
                         reject(res.statusText)
                     }
+                    toast.success('Recette supprimée')
                     resolve(res)
                 })
                 .catch(err => reject(err))

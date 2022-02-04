@@ -1,3 +1,5 @@
+import {toast} from "react-hot-toast";
+
 const serverUrl = url => {
     const serverUrl = "http://localhost:5000/api";
     // const serverUrl = process.env.NODE_ENV === 'production' ? getConfig().url_prod : getConfig().url_dev;
@@ -18,6 +20,13 @@ const handleResponse = (response, resolve, reject, toJson = false) => {
     if (response.status >= 300) {
         if (response.status === 401) {
         }
+        response.json().then(err => {
+            if (err[0] !== undefined) {
+                toast.error("Erreur: " + err[0].message)
+            } else {
+                toast.error("Erreur: " + err.message)
+            }
+        })
         reject(response)
     }
     toJson ? resolve(response.json()) : resolve(response)

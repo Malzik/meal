@@ -1,5 +1,7 @@
 import React      from "react";
+import { Toaster } from 'react-hot-toast';
 import { Navbar } from "./Navbar";
+
 
 export const Template = props => {
     return (
@@ -7,6 +9,7 @@ export const Template = props => {
             <Navbar ingredients={props.ingredients} setIngredients={props.setIngredients}
                     recipes={props.recipes} setRecipes={props.setRecipes}/>
             {props.children}
+            <Toaster />
         </div>
     );
 }

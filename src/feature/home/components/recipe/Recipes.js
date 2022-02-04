@@ -31,61 +31,34 @@ export const Recipes = ({ingredients, recipes, setRecipes}) => {
         <>
             <div className="container m-auto">
                 <h1 className={"font-roboto text-center py-4 text-3xl"}>Liste des recettes</h1>
-                <table className={"w-full table-fixed"}>
-                    <thead className={"bg-gray-800 text-white border-b"}>
-                    <tr>
-                        <th className={"ingredients-table-th text-center w-1/12"}>#</th>
-                        <th className={"ingredients-table-th"}>Nom</th>
-                        <th className={"ingredients-table-th"}>Ingrédients</th>
-                        <th className={"ingredients-table-th"}>Options</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {recipes.map(recipe => (
-                        <tr className={"ingredients-table-line"} key={recipe.id}>
-                            <th>{recipe.id}</th>
-                            <td>{recipe.name}</td>
-                            <td>{recipe.ingredients.map(ingredient => renderIngredient(ingredient))}</td>
-                            <td>
-                                <FaEdit className={"inline"}/>&nbsp;<Recipe title={"Modifier"} buttonText={"Modifier"} recipe={recipe} addRecipe={addRecipe} ingredients={ingredients}/>
-                                <button onClick={() => deleteRecipe(recipe.id)} className={"ml-4"}>
-                                    <FaTrash className={"inline"} />&nbsp;Supprimer
-                                </button>
-                            </td>
+                <div className={"max-h-[80vh] overflow-y-auto"}>
+                    <table className={"w-full table-fixed"}>
+                        <thead className={"bg-gray-800 text-white border-b sticky top-0 shadow-md"}>
+                        <tr>
+                            <th className={"ingredients-table-th text-center w-1/12"}>#</th>
+                            <th className={"ingredients-table-th"}>Nom</th>
+                            <th className={"ingredients-table-th"}>Ingrédients</th>
+                            <th className={"ingredients-table-th"}>Options</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {recipes.map(recipe => (
+                            <tr className={"ingredients-table-line"} key={recipe.id}>
+                                <th>{recipe.id}</th>
+                                <td>{recipe.name}</td>
+                                <td>{recipe.ingredients.map(ingredient => renderIngredient(ingredient))}</td>
+                                <td>
+                                    <FaEdit className={"inline"}/>&nbsp;<Recipe title={"Modifier"} buttonText={"Modifier"} recipe={recipe} addRecipe={addRecipe} ingredients={ingredients}/>
+                                    <button onClick={() => deleteRecipe(recipe.id)} className={"ml-4"}>
+                                        <FaTrash className={"inline"} />&nbsp;Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            {/*<TableContainer component={Paper}>*/}
-            {/*    <Table sx={{ minWidth: 700 }} aria-label="customized table">*/}
-            {/*        <TableHead>*/}
-            {/*            <TableRow>*/}
-            {/*                <StyledTableCell>#</StyledTableCell>*/}
-            {/*                <StyledTableCell>Nom</StyledTableCell>*/}
-            {/*                <StyledTableCell>Ingredients</StyledTableCell>*/}
-            {/*                <StyledTableCell>Options</StyledTableCell>*/}
-            {/*            </TableRow>*/}
-            {/*        </TableHead>*/}
-            {/*        <TableBody>*/}
-            {/*            {recipes.map(recipe => (*/}
-            {/*                <StyledTableRow hover key={recipe.id}>*/}
-            {/*                    <StyledTableCell component="th" scope="row">{recipe.id}</StyledTableCell>*/}
-            {/*                    <StyledTableCell align="left">{recipe.name}</StyledTableCell>*/}
-            {/*                    <StyledTableCell align="left">*/}
-            {/*                        {recipe.ingredients.map(ingredient => renderIngredient(ingredient))}*/}
-            {/*                    </StyledTableCell>*/}
-            {/*                    <StyledTableCell align="left">*/}
-            {/*                        <Recipe title={"Modifier"} buttonText={"Modifier"} recipe={recipe}/>*/}
-            {/*                        <Button variant="contained" color="error" onClick={() => deleteRecipe(recipe.id)}>*/}
-            {/*                            <Icon>delete_circle</Icon>&nbsp;Supprimer*/}
-            {/*                        </Button>*/}
-            {/*                    </StyledTableCell>*/}
-            {/*                </StyledTableRow>*/}
-            {/*            ))}*/}
-            {/*        </TableBody>*/}
-            {/*    </Table>*/}
-            {/*</TableContainer>*/}
         </>
     )
 }
