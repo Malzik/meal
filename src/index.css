@@ -44,11 +44,15 @@
         width: 45px;
     }
 
+    .modal-icons {
+        @apply h-[40px] w-[40px] p-2
+    }
+
     .muuri-item-dragging {
         border: 1px solid red;
     }
     .muuri-rightpanel-grid {
-        @apply grid grid-cols-2 gap-2 pt-4 h-2/3
+        @apply grid grid-cols-2 gap-2 pt-4 h-2/3 overflow-y-auto
      }
 
     .muuri-leftpanel-flex {

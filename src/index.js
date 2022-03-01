@@ -49,7 +49,7 @@ const AppWrapper = () => {
                 <Switch>
                     <Route path="/ingredients"><Ingredients ingredients={ingredients} setIngredients={setIngredients}/></Route>
                     <Route path="/recipes"><Recipes ingredients={ingredients} recipes={recipes} setRecipes={setRecipes}/></Route>
-                    <Route path="/" component={Home}/>
+                    <Route path="/"><Home ingredients={ingredients} setIngredients={setIngredients} recipes={recipes} setRecipes={setRecipes}/></Route>
                 </Switch>
             </Template>
         </Router>

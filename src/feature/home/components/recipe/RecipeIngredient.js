@@ -30,11 +30,11 @@ export const RecipeIngredient = ({index, ingredients, selectIngredient, updateIn
             <select value={ingredient.name} onChange={updateSelectedIngredients} className={"w-full rounded bg-white border border-solid border-gray-300 p-2"}>
                 {ingredients.map(ingredient => <option key={ingredient.id} value={ingredient.name}>{ingredient.name}</option>)}
             </select>
-            <div className="flex flex-wrap">
-                <div className="border-4 my-2 border-gray rounded w-full md:w-1/2">
+            <div className="flex flex-wrap justify-around">
+                <div className="border-4 my-2 border-gray rounded w-full md:w-[48%]">
                     <input type={"number"} value={ingredient.quantity || 0} onChange={e => updateSelectedIngredientsQuantity(e.target.value)} placeholder={"Quantité"} className={"m-2 w-[95%] focus:outline-none"}/>
                 </div>
-                <div className="border-4 my-2 border-gray rounded w-full md:w-1/2">
+                <div className="border-4 my-2 border-gray rounded w-full md:w-[48%]">
                     <input value={ingredient.unit || ''} onChange={e => updateSelectedIngredientsUnit(e.target.value)} placeholder={"Unité"} className={"m-2 w-[95%] focus:outline-none"}/>
                 </div>
             </div>

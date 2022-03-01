@@ -2,6 +2,7 @@ import { useCallback } from "react";
 
 export function useSend(setItems, date) {
     return useCallback(({ key, fromId, toId }) => {
+        date = date.format("DD/MM/YYYY")
         // The id of the MuuriComponent that is sending the item.
         fromId = fromId.toLowerCase();
         // The id of the MuuriComponent that is receiving the item.
@@ -9,16 +10,16 @@ export function useSend(setItems, date) {
 
         // Sync the state with the items.
         setItems(items => {
-            const newItems = { ...items };
+            let newItems = { ...items };
             const from = fromId === "ingredients" ? newItems[fromId] : newItems[date][fromId]
             const to = toId === "ingredients" ? newItems[toId] : newItems[date][toId]
 
             const itemToMove = from.filter(item => item.id === parseInt(key))
-            // Remove the item from the old category.
-            newItems[date][fromId] = from.filter(item => item.id !== parseInt(key));
 
             // Add the item in the new category.
-            toId === "ingredients" ? newItems[toId] = to.concat(itemToMove): newItems[date][toId] = to.concat(itemToMove);
+            if (toId !== "ingredients") {
+                newItems[date][toId] = to.concat(itemToMove)
+            }
             return newItems;
         });
     }, [date, setItems]);

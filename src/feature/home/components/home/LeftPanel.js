@@ -5,19 +5,27 @@ import {MuuriComponent} from "muuri-react";
 import {columnOptions} from "../../../../service/utils";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
-export const LeftPanel = ({date, onSend, setTestDate, items, previousWeek, nextWeek}) => {
-    const [meals, ] = useState(items)
+export const LeftPanel = ({date, onSend, setTestDate, items, previousWeek, nextWeek, setItems}) => {
+    const [meals, setMeals] = useState(items)
     const [currentMeal, setCurrentMeal] = useState([])
     const [currentDate, setCurrentDate] = useState(moment())
 
     useEffect(() => {
         setCurrentDate(date)
-    }, [date])
+        if (meals[currentDate.format("DD/MM/YYYY")] === undefined) {
+            setMeals({...meals, [currentDate.format("DD/MM/YYYY")]: {
+                    breakfast: [],
+                    lunch: [{id: 3, name: "ntm"}],
+                    dinner: []
+                }
+            })
+        }
+    }, [date, meals])
 
     const selectDate = (add) => {
-        const newDate = moment(date).add(add, 'days')
+        const newDate = moment(date).startOf('isoWeek').add(add, 'days')
         setCurrentDate(newDate)
-        setTestDate(newDate.format("DD/MM/YYYY"))
+        setTestDate(newDate)
         if (meals[newDate.format("DD/MM/YYYY")] !== undefined) {
             setCurrentMeal(meals[newDate.format("DD/MM/YYYY")])
         } else {
@@ -42,12 +50,12 @@ export const LeftPanel = ({date, onSend, setTestDate, items, previousWeek, nextW
         console.log("Repas not found pour la date " + currentDate.format("DD/MM/YYYY"))
         return null
     }
-    console.log(currentDate.get('isoWeekday'))
 
     const isToday = key => currentDate.get('isoWeekday') === key ? "underline" : "cursor-pointer";
 
+    console.log(meals)
     return (
-        <div className={"left-panel font-roboto w-11/12"}>
+        <div className={"left-panel font-roboto w-11/12 h-[80vh]"}>
             <div/>
             <div className={"days text-center align-middle font-bold"}>
                 <div className={"arrow cursor-pointer"} onClick={() => previousWeek()}>
@@ -72,13 +80,13 @@ export const LeftPanel = ({date, onSend, setTestDate, items, previousWeek, nextW
             <div className={"border rounded-3xl h-full w-full bg-white p-2"}>
                 <div className={"bg-indigo-200 rounded-3xl h-full w-full p-4"}>
                     <div className={"grid grid-rows-3 w-full h-full testdragable"}>
-                        <MuuriComponent {...columnOptions} id={"breakfast"} onSend={onSend} containerClass={"muuri-leftpanel-flex"}>
+                        <MuuriComponent {...columnOptions} id={"breakfast"} onSend={onSend} containerClass={"muuri-leftpanel-flex"} dragEnabled dragFixed>
                             {renderRecipe("breakfast")}
                         </MuuriComponent>
-                        <MuuriComponent {...columnOptions} id={"lunch"} onSend={onSend} containerClass={"muuri-leftpanel-flex"}>
+                        <MuuriComponent {...columnOptions} id={"lunch"} onSend={onSend} containerClass={"muuri-leftpanel-flex"} dragEnabled dragFixed>
                             {renderRecipe("lunch")}
                         </MuuriComponent>
-                        <MuuriComponent {...columnOptions} id={"dinner"} onSend={onSend} containerClass={"muuri-leftpanel-flex"}>
+                        <MuuriComponent {...columnOptions} id={"dinner"} onSend={onSend} containerClass={"muuri-leftpanel-flex"} dragEnabled dragFixed>
                             {renderRecipe("dinner")}
                         </MuuriComponent>
                     </div>

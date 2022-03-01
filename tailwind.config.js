@@ -9,7 +9,8 @@ module.exports = {
     extend: {
       colors: {
         indigo: {
-          200: '#F0F7FF'
+          200: '#F0F7FF',
+          300: '#ffffff'
         }
       }
     },

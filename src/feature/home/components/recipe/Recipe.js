@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { recipeApi }        from "../../../../service/recipe";
 import { RecipeIngredient } from "./RecipeIngredient";
 import {Modal} from "../layout/Modal";
-import {FaPlusCircle} from "react-icons/fa";
+import {FaHamburger, FaPlusCircle} from "react-icons/fa";
 
 export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, ingredients}) => {
     const [open, setOpen] = useState(false)
@@ -109,7 +109,7 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
                     </button>
                 </div>
             </Modal>
-            <button onClick={handleOpen} className={navBarClassName}>{title}</button>
+            <FaHamburger onClick={handleOpen} className={"cursor-pointer modal-icons"}/>
         </>
     )
 }

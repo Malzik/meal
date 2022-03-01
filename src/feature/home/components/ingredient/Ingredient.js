@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { ingredientApi } from "../../../../service/ingredient";
 import {Modal} from "../layout/Modal";
-import {FaPlusCircle} from "react-icons/fa";
+import {FaAppleAlt, FaPlusCircle} from "react-icons/fa";
 
-export const Ingredient = ({title, buttonText, ingredient, updateIngredients, navBarClassName}) => {
+export const Ingredient = ({children, title, buttonText, ingredient, updateIngredients}) => {
     const [open, setOpen] = useState(false)
     const [name, setName] = useState(ingredient !== undefined ? ingredient.name : '')
 
-    const handleOpen = () => setOpen(true);
+    const handleOpen = () => {
+        console.log("test")
+        setOpen(true);
+    }
     const handleClose = () => {
         setOpen(false);
         if (ingredient === undefined) {
@@ -65,7 +68,7 @@ export const Ingredient = ({title, buttonText, ingredient, updateIngredients, na
                     </button>
                 </div>
             </Modal>
-            <button className={navBarClassName} onClick={handleOpen}>{title}</button>
+            <div onClick={handleOpen}>{children}</div>
         </>
     )
 }

@@ -19,14 +19,6 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
         }))
     }
 
-    const addRecipe = (newRecipe, isNew = false) => {
-        if (isNew) {
-            setRecipes([...recipes, newRecipe])
-            return
-        }
-        setRecipes(recipes.map(recipe => recipe.id === newRecipe.id ? {...recipe, ...newRecipe} : recipe))
-    }
-
     return (
         <nav className="bg-gray-800 mb-3">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,15 +33,9 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
                         </div>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <a href="/"
-                                   className={"navbar-title"}
-                                >
-                                    Accueil
-                                </a>
-                                <NavLink to="/ingredients" className={"navbar-title"}>Ingredients</NavLink>
-                                <NavLink to="/recipes" className={"navbar-title"}>Recette</NavLink>
-                                <Ingredient title={"Ajouter un ingrédient"} buttonText={"Ajouter"} updateIngredients={updateIngredients} navBarClassName={"navbar-title "}/>
-                                <Recipe title={"Ajouter une recette"} buttonText={"Ajouter"} addRecipe={addRecipe} navBarClassName={"navbar-title"} ingredients={ingredients}/>
+                                <NavLink to="" exact activeClassName="text-indigo-500" className={"navbar-title"}>Accueil</NavLink>
+                                <NavLink to="/ingredients" activeClassName="text-indigo-500" className={"navbar-title"}>Ingredients</NavLink>
+                                <NavLink to="/recipes" activeClassName="text-indigo-500" className={"navbar-title"}>Recette</NavLink>
                             </div>
                         </div>
                     </div>
@@ -108,8 +94,6 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
                     </a>
                     <NavLink to="/ingredients" className={"navbar-dropdown-title"}>Ingredients</NavLink>
                     <NavLink to="/recipes" className={"navbar-dropdown-title"}>Recette</NavLink>
-                    <Ingredient title={"Ajouter un ingrédient"} buttonText={"Ajouter"} updateIngredients={updateIngredients} navBarClassName={"navbar-dropdown-title"}/>
-                    <Recipe title={"Ajouter une recette"} buttonText={"Ajouter"} addRecipe={() => {}} navBarClassName={"navbar-dropdown-title"} ingredients={ingredients}/>
                 </div>
             </div>
         </nav>
