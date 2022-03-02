@@ -15,7 +15,7 @@ export const DaySlider = ({selectedDay, setSelectedDay}) => {
     const isToday = day => selectedDay === day
 
     return (
-        <div className={"flex overflow-x-scroll gap-4"}>
+        <div className={"flex overflow-x-auto gap-4"}>
             {
                 days.map(day =>
                     <div key={day} onClick={() => setSelectedDay(day)}
