@@ -1,82 +1,95 @@
 import React, {useEffect, useState} from "react";
 import {Recipe} from "./components/Recipe";
-import {FaPlus} from "react-icons/fa";
+import {FaPlus, FaPlusCircle} from "react-icons/fa";
 import {DaySlider} from "./components/DaySlider";
 import moment from "moment";
 import {Carousel} from "./components/Carousel";
+import {BottomSheet} from "react-spring-bottom-sheet";
+import 'react-spring-bottom-sheet/dist/style.css'
 
 export const MobileHome = () => {
     const [selectedDay, setSelectedDay] = useState(moment().format('DD-MM'))
     const [recipes, setRecipes] = useState([])
-    const [dbRecipes, setDbRecipes] = useState([])
+    const [filteredRecipes, setFilteredRecipes] = useState([])
+    const [meals, setMeals] = useState([])
     const [open, setOpen] = useState(false)
-    const [currentSlide, setCurrentSlide] = useState(0)
+    const [searchName, setSearchName] = useState("")
 
     useEffect(() => {
-        setRecipes(['empty.png', 'empty.png', 'empty.png', 'empty.png'])
-        // setRecipes([{image: undefined, name: "Poulet curry coco"}])
-    }, [])
+        setRecipes([
+            {id: 1, image: 'empty.png', name: "Poulet curry coco"},
+            {id: 2, image: 'empty.png', name: "Lasagne"},
+            {id: 3, image: 'empty.png', name: "Petit déjeuner"},
+            {id: 4, image: 'empty.png', name: "Pomme de terre Poulet"},
+            {id: 5, image: 'empty.png', name: "Nuggets"},
+            {id: 6, image: 'empty.png', name: "Riz"},
+            {id: 7, image: 'empty.png', name: "Pates à la bolognaise"},
+            {id: 8, image: 'empty.png', name: "Pates carbonara"},
+        ])
+        setFilteredRecipes([
+            {id: 1, image: 'empty.png', name: "Poulet curry coco"},
+            {id: 2, image: 'empty.png', name: "Lasagne"},
+            {id: 3, image: 'empty.png', name: "Petit déjeuner"},
+            {id: 4, image: 'empty.png', name: "Pomme de terre Poulet"},
+            {id: 5, image: 'empty.png', name: "Nuggets"},
+            {id: 6, image: 'empty.png', name: "Riz"},
+            {id: 7, image: 'empty.png', name: "Pates à la bolognaise"},
+            {id: 8, image: 'empty.png', name: "Pates carbonara"},
+        ])
+    }, [meals])
 
-    const addRecipe = (recipe) => setRecipes(oldRecipes => [oldRecipes, recipe])
+    const addMeal = (recipe) => {
+        const oldMeals = meals
+        if (oldMeals[selectedDay] === undefined) {
+            oldMeals[selectedDay] = recipe
+            setMeals(oldMeals)
+        } else {
+            console.log(oldMeals[selectedDay])
+            oldMeals[selectedDay].push(recipe)
+            setMeals(oldMeals)
+        }
+        setOpen(false)
+    }
 
     const getRecipes = () => {
-        return dbRecipes.filter(dbRecipe => dbRecipe.date === selectedDay)
+        return meals;
+        // return meals.filter(meal => meal.date === selectedDay)
     }
+
+    const searchByName = (value) => {
+        setSearchName(value)
+        if (value === "") {
+            setFilteredRecipes(recipes)
+        } else {
+            setFilteredRecipes(recipes.filter(recipe => recipe.name.includes(value)))
+
+        }
+    }
+
     return (
         <div className={"font-roboto m-2"}>
             <DaySlider selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
-            <h2 className={"text-[#6699CC] text-2xl font-bold pt-2"}>Mes recettes</h2>
+            <h2 className={"text-[#ffaf64] text-2xl font-bold pt-2"}>Mes recettes</h2>
             {getRecipes().map(recipe => <Recipe key={recipe.name} recipe={recipe}/>)}
-            <div className={"border-2 border-[#6699CC] text-[#6699CC] rounded-lg max-h-[8em] h-[8em] my-2 text-center"}
+            <div className={"border-2 border-[#ffaf64] text-[#ffaf64] rounded-lg max-h-[8em] h-[8em] my-2 text-center shadow-md"}
                  onClick={() => setOpen(true)}>
-                <FaPlus className={"w-[4rem] h-[4rem] p-1 m-auto mt-3 rounded-full border-4 border-[#6699CC]"}/>
+                <FaPlus className={"w-[4rem] h-[4rem] p-1 m-auto mt-3 rounded-full border-4 border-[#ffaf64]"}/>
                 <h3 className={"text-2xl"}>Ajouter une recette</h3>
             </div>
-            {open ? (
-                <>
-                    <div
-                        className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
-                    >
-                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                            {/*content*/}
-                            <div className="border-0 rounded-lg shadow-lg bg-[#F7EDE2] relative flex flex-col w-full outline-none focus:outline-none">
-                                <button
-                                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                                    onClick={() => setOpen(false)}
-                                >
-                                    <span className="bg-transparent text-black opacity-5 h-6 w-6 text-2xl block outline-none focus:outline-none">
-                                      ×
-                                    </span>
-                                </button>
-                                {/*body*/}
-                                <div className="relative p-6 flex-auto">
-                                    <div className="max-w-lg h-72 flex overflow-hidden relative">
-                                        <Carousel slides={recipes}/>
-                                    </div>
-                                </div>
-                                {/*footer*/}
-                                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                                    <button
-                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        Femer
-                                    </button>
-                                    <button
-                                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        Ajouter
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+            <BottomSheet open={open}
+                         onDismiss={() => setOpen(false)}>
+                <div className={"p-2"}>
+                    <div className="border-4 border-gray rounded-xl w-full">
+                        <input type={"text"} value={searchName} onChange={e => searchByName(e.target.value)} placeholder={"Nom de la recette..."} className={"m-2 w-[95%] focus:outline-none"}/>
                     </div>
-                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                </>
-            ) : null}
+                    <Carousel slides={filteredRecipes} addMeal={addMeal}/>
+                </div>
+                <div className={"flex justify-center pb-4 pt-2"}>
+                    <button className={"flex items-center"}>
+                        <FaPlusCircle/> Ajouter ma recette
+                    </button>
+                </div>
+            </BottomSheet>
         </div>
     )
 }

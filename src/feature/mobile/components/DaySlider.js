@@ -15,13 +15,13 @@ export const DaySlider = ({selectedDay, setSelectedDay}) => {
     const isToday = day => selectedDay === day
 
     return (
-        <div className={"flex overflow-x-auto gap-4"}>
+        <div className={"flex overflow-x-auto gap-4 flex-nowrap "} style={{ whiteSpace: "nowrap"}}>
             {
                 days.map(day =>
                     <div key={day} onClick={() => setSelectedDay(day)}
                          className={isToday(day) ?
-                             "bg-red-900 p-1 rounded-lg text-white cursor-pointer"
-                             : "p-1 rounded-lg cursor-pointer"}>{day}</div>
+                             "bg-[#ffaf64] p-1 rounded-lg text-white cursor-pointer inline-block"
+                             : "p-1 rounded-lg cursor-pointer inline-block"}>{day}</div>
                 )
             }
         </div>
