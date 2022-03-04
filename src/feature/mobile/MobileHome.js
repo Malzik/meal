@@ -6,6 +6,15 @@ import moment from "moment";
 import {Carousel} from "./components/Carousel";
 import {BottomSheet} from "react-spring-bottom-sheet";
 import 'react-spring-bottom-sheet/dist/style.css'
+import {
+    LeadingActions,
+    SwipeableList,
+    SwipeableListItem,
+    SwipeAction,
+    TrailingActions, Type,
+} from 'react-swipeable-list';
+import 'react-swipeable-list/dist/styles.css';
+import {MealSwipeableList} from "./components/SwipeableList";
 
 export const MobileHome = () => {
     const [selectedDay, setSelectedDay] = useState(moment().format('DD-MM'))
@@ -39,21 +48,22 @@ export const MobileHome = () => {
     }, [meals])
 
     const addMeal = (recipe) => {
-        const oldMeals = meals
-        if (oldMeals[selectedDay] === undefined) {
-            oldMeals[selectedDay] = recipe
-            setMeals(oldMeals)
-        } else {
-            console.log(oldMeals[selectedDay])
-            oldMeals[selectedDay].push(recipe)
-            setMeals(oldMeals)
+        let alreadyAdd = false
+        meals.forEach(meal => {
+            if (meal.id === recipe.id && meal.date === selectedDay) {
+                alreadyAdd = true
+                meal.quantity += 1
+            }
+        })
+        if (!alreadyAdd) {
+            setMeals(oldMeals => [...oldMeals, {...recipe, date: selectedDay, quantity: 1}])
         }
+        setSearchName("")
         setOpen(false)
     }
 
-    const getRecipes = () => {
-        return meals;
-        // return meals.filter(meal => meal.date === selectedDay)
+    const getMeals = () => {
+        return meals.filter(meal => meal.date === selectedDay)
     }
 
     const searchByName = (value) => {
@@ -61,16 +71,26 @@ export const MobileHome = () => {
         if (value === "") {
             setFilteredRecipes(recipes)
         } else {
-            setFilteredRecipes(recipes.filter(recipe => recipe.name.includes(value)))
-
+            setFilteredRecipes(recipes.filter(recipe => recipe.name.toLowerCase().includes(value.toLowerCase())))
         }
+    }
+
+    const removeMeals = id => {
+        setMeals(() => meals.filter(meal => {
+            if (meal.id !== id)
+                return meal
+            if (meal.quantity > 1) {
+                meal.quantity -= 1
+                return meal
+            }
+        }))
     }
 
     return (
         <div className={"font-roboto m-2"}>
             <DaySlider selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
-            <h2 className={"text-[#ffaf64] text-2xl font-bold pt-2"}>Mes recettes</h2>
-            {getRecipes().map(recipe => <Recipe key={recipe.name} recipe={recipe}/>)}
+            <h2 className={"text-[#ffaf64] text-2xl font-bold py-2"}>Mes recettes</h2>
+            <MealSwipeableList meals={getMeals()} removeMeals={removeMeals}/>
             <div className={"border-2 border-[#ffaf64] text-[#ffaf64] rounded-lg max-h-[8em] h-[8em] my-2 text-center shadow-md"}
                  onClick={() => setOpen(true)}>
                 <FaPlus className={"w-[4rem] h-[4rem] p-1 m-auto mt-3 rounded-full border-4 border-[#ffaf64]"}/>
@@ -79,8 +99,9 @@ export const MobileHome = () => {
             <BottomSheet open={open}
                          onDismiss={() => setOpen(false)}>
                 <div className={"p-2"}>
-                    <div className="border-4 border-gray rounded-xl w-full">
-                        <input type={"text"} value={searchName} onChange={e => searchByName(e.target.value)} placeholder={"Nom de la recette..."} className={"m-2 w-[95%] focus:outline-none"}/>
+                    <div className="border-4 border-gray-400 text-[#ffaf64] rounded-xl w-full">
+                        <input type={"text"} value={searchName} onChange={e => searchByName(e.target.value)} placeholder={"Nom de la recette..."}
+                               className={"m-2 w-[95%] focus:outline-none"}/>
                     </div>
                     <Carousel slides={filteredRecipes} addMeal={addMeal}/>
                 </div>

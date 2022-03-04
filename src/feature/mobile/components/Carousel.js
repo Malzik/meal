@@ -7,7 +7,7 @@ export const Carousel = ({ slides, addMeal}) => {
 
     return (
         length > 0 && (
-            <div className={"flex overflow-x-auto gap-4 py-2"}>
+            <div className={"flex overflow-x-auto overflow-y-hidden gap-4 py-4 text-gray-700"}>
                 {
                     slides.map((slide, index) =>
                         <div key={index} className={"w-[8rem] h-[8rem] text-center"} onClick={() => addMeal(slide)}>
