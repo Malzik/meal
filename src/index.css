@@ -78,4 +78,5 @@
     .ingredients-table-line > th, td {
         @apply py-4
     }
+
 }

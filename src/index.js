@@ -11,6 +11,7 @@ import { Recipes }                                from "./feature/home/component
 import {ingredientApi} from "./service/ingredient";
 import {recipeApi} from "./service/recipe";
 import {MobileHome} from "./feature/mobile/MobileHome";
+import {Login} from "./feature/login/Login";
 
 const AppWrapper = () => {
     const [ingredients, setIngredients] = useState([])
@@ -51,6 +52,7 @@ const AppWrapper = () => {
                     <Route path="/ingredients"><Ingredients ingredients={ingredients} setIngredients={setIngredients}/></Route>
                     <Route path="/recipes"><Recipes ingredients={ingredients} recipes={recipes} setRecipes={setRecipes}/></Route>
                     <Route path="/mobile"><MobileHome /></Route>
+                    <Route path="/"><Login/></Route>
                     <Route path="/"><Home ingredients={ingredients} setIngredients={setIngredients} recipes={recipes} setRecipes={setRecipes}/></Route>
                 </Switch>
             </Template>
