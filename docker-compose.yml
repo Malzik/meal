@@ -1,0 +1,16 @@
+version: '3'
+services:
+  front:
+    image: node:alpine
+    container_name: mealexis
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+    expose:
+      - 83
+    ports:
+      - "83:3000"
+    volumes:
+      - ./:/var/www
+      - "./volumes/log:/var/log"
+    working_dir: /var/www
+    command: npm start

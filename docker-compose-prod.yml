@@ -1,0 +1,8 @@
+version: '3'
+services:
+  front:
+    image: reg.amoyel.fr/aheroin/mealexis:latest
+    container_name: mealexis
+    ports:
+      - "83:80"
+    restart: always
