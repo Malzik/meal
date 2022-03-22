@@ -1,4 +1,5 @@
 import React from "react";
+import {FaPlusCircle} from "react-icons/fa";
 
 export const Carousel = ({ slides, addMeal}) => {
     const length = slides.length;
@@ -6,7 +7,7 @@ export const Carousel = ({ slides, addMeal}) => {
     const getImage = image => image === undefined ? "empty.png" : "images/" + image
 
     return (
-        length > 0 && (
+        length > 0 ? (
             <div className={"flex overflow-x-auto overflow-y-hidden gap-4 py-4 text-gray-600"}>
                 {
                     slides.map((slide, index) =>
@@ -17,6 +18,12 @@ export const Carousel = ({ slides, addMeal}) => {
                         </div>
                     )
                 }
+            </div>
+        ) : (
+            <div className={"text-gray-600"}>
+                <div className={"text-center mt-2"}>
+                    <h1>Aucun plat trouvé</h1>
+                </div>
             </div>
         )
     );

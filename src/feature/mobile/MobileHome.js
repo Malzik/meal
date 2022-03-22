@@ -77,6 +77,11 @@ export const MobileHome = () => {
         }))
     }
 
+    const dismissBottomSheet = () => {
+        setOpen(false)
+        setSearchName("")
+    }
+
     return (
         <div className={"font-roboto m-2"}>
             <DaySlider selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
@@ -88,7 +93,7 @@ export const MobileHome = () => {
                 <h3 className={"text-2xl"}>Ajouter une recette</h3>
             </div>
             <BottomSheet open={open}
-                         onDismiss={() => setOpen(false)}>
+                         onDismiss={() => dismissBottomSheet()}>
                 <div className={"p-2"}>
                     <div className="border-4 border-gray-400 text-gray-600 rounded-xl w-full">
                         <input type={"text"} value={searchName} onChange={e => searchByName(e.target.value)} placeholder={"Nom de la recette..."}
@@ -97,8 +102,8 @@ export const MobileHome = () => {
                     <Carousel slides={filteredRecipes} addMeal={addMeal}/>
                 </div>
                 <div className={"flex justify-center pb-4 pt-2"}>
-                    <button className={"flex items-center"}>
-                        <FaPlusCircle/> Ajouter ma recette
+                    <button className={"flex items-center text-gray-600"}>
+                        <FaPlusCircle/> <span className={"ml-1"}>Ajouter ma recette</span>
                     </button>
                 </div>
             </BottomSheet>
