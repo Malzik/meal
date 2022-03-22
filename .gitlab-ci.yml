@@ -1,0 +1,27 @@
+image: docker:stable-git
+
+stages:
+  - docker
+  - deploy-server
+
+build-front:
+  stage: docker
+  script:
+    # registry user/password : variables définies dans gitlab
+    - echo "$REGISTRY_PASSWORD" | docker login reg.amoyel.fr -u "$REGISTRY_USER" --password-stdin
+    - docker build -t reg.amoyel.fr/aheroin/mealexis .
+    - docker push reg.amoyel.fr/aheroin/mealexis
+  only:
+    - master
+
+docker-deploy:
+  stage: deploy-server
+  image: docker/compose
+  tags:
+    - deploy-server
+  script:
+    - docker-compose -f docker-compose-prod.yml down --remove-orphans
+    - docker-compose -f docker-compose-prod.yml pull
+    - docker-compose -f docker-compose-prod.yml up -d  --force-recreate
+  only:
+    - master

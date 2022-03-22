@@ -33,7 +33,7 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
                         </div>
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
-                                <NavLink to="" exact activeClassName="text-indigo-500" className={"navbar-title"}>Accueil</NavLink>
+                                <NavLink to="/" activeClassName="text-indigo-500" className={"navbar-title"}>Accueil</NavLink>
                                 <NavLink to="/ingredients" activeClassName="text-indigo-500" className={"navbar-title"}>Ingredients</NavLink>
                                 <NavLink to="/recipes" activeClassName="text-indigo-500" className={"navbar-title"}>Recette</NavLink>
                             </div>
@@ -87,11 +87,7 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
             </div>
             <div className={isOpen ? "show" : "hidden"}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="/"
-                       className="navbar-dropdown-title"
-                    >
-                        Accueil
-                    </a>
+                    <NavLink to="/" className={"navbar-dropdown-title"}>Accueil</NavLink>
                     <NavLink to="/ingredients" className={"navbar-dropdown-title"}>Ingredients</NavLink>
                     <NavLink to="/recipes" className={"navbar-dropdown-title"}>Recette</NavLink>
                 </div>

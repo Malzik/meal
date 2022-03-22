@@ -8,13 +8,13 @@ export const mealApi = {
                 .then(res =>resolve(res))
                 .catch(err => reject(err))
         }),
-    addMeal: (title, date, recipes) =>
+    addMeal: (date, order, recipeId) =>
         new Promise((resolve, reject) => {
             requestApi
                 .post("meal", {
-                    title: title,
+                    order: order,
                     date: date,
-                    recipes: recipes
+                    recipe_id: recipeId
                 })
                 .then(res =>{
                     if(res.status >= 300) {
@@ -22,6 +22,13 @@ export const mealApi = {
                     }
                     resolve(res)
                 })
+                .catch(err => reject(err))
+        }),
+    removeMeal: id =>
+        new Promise((resolve, reject) => {
+            requestApi
+                .delete("meal/" + id)
+                .then(res =>resolve(res))
                 .catch(err => reject(err))
         }),
 }
