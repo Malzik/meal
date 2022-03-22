@@ -1,20 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Recipe} from "./components/Recipe";
 import {FaPlus, FaPlusCircle} from "react-icons/fa";
 import {DaySlider} from "./components/DaySlider";
 import moment from "moment";
 import {Carousel} from "./components/Carousel";
 import {BottomSheet} from "react-spring-bottom-sheet";
 import 'react-spring-bottom-sheet/dist/style.css'
-import {
-    LeadingActions,
-    SwipeableList,
-    SwipeableListItem,
-    SwipeAction,
-    TrailingActions, Type,
-} from 'react-swipeable-list';
 import 'react-swipeable-list/dist/styles.css';
 import {MealSwipeableList} from "./components/SwipeableList";
+import {recipeApi} from "../../service/recipe";
+import {mealApi} from "../../service/meal";
 
 export const MobileHome = () => {
     const [selectedDay, setSelectedDay] = useState(moment().format('DD-MM'))
@@ -23,47 +17,41 @@ export const MobileHome = () => {
     const [meals, setMeals] = useState([])
     const [open, setOpen] = useState(false)
     const [searchName, setSearchName] = useState("")
+    const [order, setOrder] = useState(1)
 
     useEffect(() => {
-        setRecipes([
-            {id: 1, image: 'empty.png', name: "Poulet curry coco"},
-            {id: 2, image: 'empty.png', name: "Lasagne"},
-            {id: 3, image: 'empty.png', name: "Petit déjeuner"},
-            {id: 4, image: 'empty.png', name: "Pomme de terre Poulet"},
-            {id: 5, image: 'empty.png', name: "Nuggets"},
-            {id: 6, image: 'empty.png', name: "Riz"},
-            {id: 7, image: 'empty.png', name: "Pates à la bolognaise"},
-            {id: 8, image: 'empty.png', name: "Pates carbonara"},
-        ])
-        setFilteredRecipes([
-            {id: 1, image: 'empty.png', name: "Poulet curry coco"},
-            {id: 2, image: 'empty.png', name: "Lasagne"},
-            {id: 3, image: 'empty.png', name: "Petit déjeuner"},
-            {id: 4, image: 'empty.png', name: "Pomme de terre Poulet"},
-            {id: 5, image: 'empty.png', name: "Nuggets"},
-            {id: 6, image: 'empty.png', name: "Riz"},
-            {id: 7, image: 'empty.png', name: "Pates à la bolognaise"},
-            {id: 8, image: 'empty.png', name: "Pates carbonara"},
-        ])
-    }, [meals])
+            mealApi.getMeals().then(meals => setMeals(meals))
+            recipeApi.getRecipes().then(recipes => {
+                setRecipes(recipes)
+                setFilteredRecipes(recipes)
+            })
+    }, [])
 
     const addMeal = (recipe) => {
-        let alreadyAdd = false
-        meals.forEach(meal => {
-            if (meal.id === recipe.id && meal.date === selectedDay) {
-                alreadyAdd = true
-                meal.quantity += 1
-            }
-        })
-        if (!alreadyAdd) {
-            setMeals(oldMeals => [...oldMeals, {...recipe, date: selectedDay, quantity: 1}])
-        }
-        setSearchName("")
-        setOpen(false)
+        mealApi
+            .addMeal(moment(selectedDay, 'DD-MM').format('YYYY-MM-DD'), order, recipe.id)
+            .then(() => {
+                let alreadyAdd = false
+                meals.forEach(meal => {
+                    if (meal.id === recipe.id && moment(meal.date).format('DD-MM') === selectedDay) {
+                        alreadyAdd = true
+                        meal.quantity += 1
+                    }
+                })
+                if (!alreadyAdd) {
+                    setMeals(oldMeals => [...oldMeals, {...recipe, date: moment(selectedDay, 'DD-MM'), quantity: 1}])
+                }
+                setSearchName("")
+                setOpen(false)
+            })
+            .catch(e => console.log(e))
     }
 
-    const getMeals = () => {
-        return meals.filter(meal => meal.date === selectedDay)
+     const getMeals = () => {
+        return meals.filter(meal => {
+            // console.log(meal.date,moment(meal.date).format('DD-MM'), selectedDay, moment(meal.date).format('DD-MM') === selectedDay)
+            return moment(meal.date).format('DD-MM') === selectedDay
+        })
     }
 
     const searchByName = (value) => {
@@ -81,7 +69,10 @@ export const MobileHome = () => {
                 return meal
             if (meal.quantity > 1) {
                 meal.quantity -= 1
+                addMeal(meal)
                 return meal
+            } else {
+                mealApi.removeMeal(id)
             }
         }))
     }
@@ -99,7 +90,7 @@ export const MobileHome = () => {
             <BottomSheet open={open}
                          onDismiss={() => setOpen(false)}>
                 <div className={"p-2"}>
-                    <div className="border-4 border-gray-400 text-[#ffaf64] rounded-xl w-full">
+                    <div className="border-4 border-gray-400 text-gray-600 rounded-xl w-full">
                         <input type={"text"} value={searchName} onChange={e => searchByName(e.target.value)} placeholder={"Nom de la recette..."}
                                className={"m-2 w-[95%] focus:outline-none"}/>
                     </div>
