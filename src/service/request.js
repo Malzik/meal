@@ -1,8 +1,8 @@
 import {toast} from "react-hot-toast";
+import {getConfig} from "./config/config";
 
 const serverUrl = url => {
-    const serverUrl = "http://localhost:5000/api";
-    // const serverUrl = process.env.NODE_ENV === 'production' ? getConfig().url_prod : getConfig().url_dev;
+    const serverUrl = process.env.NODE_ENV === 'production' ? getConfig().url_prod : getConfig().url_dev;
 
     return serverUrl + "/" + url;
 }

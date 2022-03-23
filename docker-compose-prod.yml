@@ -6,3 +6,9 @@ services:
     ports:
       - "83:80"
     restart: always
+    networks:
+      - traquenard-admin_default
+networks:
+  default:
+    external:
+      name: traquenard-admin_default
