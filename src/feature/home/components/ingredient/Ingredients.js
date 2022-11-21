@@ -32,7 +32,7 @@ export const Ingredients = ({ingredients, setIngredients}) => {
                     <thead className={"bg-gray-800 text-white border-b sticky top-0 shadow-md"}>
                     <tr>
                         <th className={"ingredients-table-th text-center w-1/12"}>#</th>
-                        <th className={"ingredients-table-th"}>Nom</th>
+                        <th className={"ingredients-table-th w-6/12"}>Nom</th>
                         <th className={"ingredients-table-th"}>Options</th>
                     </tr>
                     </thead>
@@ -41,10 +41,12 @@ export const Ingredients = ({ingredients, setIngredients}) => {
                         <tr className={"ingredients-table-line"} key={ingredient.id}>
                             <th>{ingredient.id}</th>
                             <td>{ingredient.name}</td>
-                            <td>
-                                <FaEdit className={"inline"}/>&nbsp;<Ingredient title={"Modifier"} buttonText={"Modifier"} ingredient={ingredient} updateIngredients={updateIngredients}/>
-                                <button onClick={() => deleteIngredient(ingredient.id)} className={"ml-4"}>
-                                    <FaTrash className={"inline"} />&nbsp;Supprimer
+                            <td className={"flex text-xl sm:block sm:text-md"}>
+                                <Ingredient title={"Modifier"} buttonText={"Modifier"} ingredient={ingredient} updateIngredients={updateIngredients}>
+                                    <FaEdit className={"inline "}/>&nbsp;<span className={"hidden sm:inline-block"}>Modifier</span>
+                                </Ingredient>
+                                <button onClick={() => deleteIngredient(ingredient.id)}>
+                                    <FaTrash className={"inline"} />&nbsp;<div className={"hidden sm:inline-block"}>Supprimer</div>
                                 </button>
                             </td>
                         </tr>

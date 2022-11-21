@@ -72,11 +72,12 @@
     }
 
     .ingredients-table-line {
-        @apply bg-white border-b transition duration-300 ease-in-out hover:bg-gray-200
+        @apply bg-white border-b hover:bg-gray-200
     }
 
     .ingredients-table-line > th, td {
         @apply py-4
     }
+
 
 }

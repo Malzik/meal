@@ -4,8 +4,9 @@ import { RecipeIngredient } from "./RecipeIngredient";
 import {Modal} from "../layout/Modal";
 import {FaHamburger, FaPlusCircle} from "react-icons/fa";
 
-export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, ingredients}) => {
+export const Recipe = ({title, buttonText, recipe, addRecipe, ingredients, children}) => {
     const [open, setOpen] = useState(false)
+    const [error, setError] = useState('')
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [name, setName] = useState(recipe !== undefined ? recipe.name : '')
@@ -18,6 +19,10 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
     }, [recipe])
 
     const createRecipe = () => {
+        if (name.length <= 3) {
+            setError('Le nom de la recette est invalide')
+            return;
+        }
         if (recipe !== undefined) {
             recipeApi
                 .updateRecipe(recipe.id, name)
@@ -48,7 +53,6 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
     const deleteIngredient = (index) => {
         const newIngredients = [...ingredientsSelected]
         newIngredients.splice(index, 1)
-        console.log(index, ingredientsSelected, newIngredients)
         setIngredientsSelected(newIngredients)
     }
 
@@ -72,6 +76,9 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
                 <div className="p-6">
                     <div className="border-4 border-gray rounded-full w-full">
                         <input value={name} onChange={e => setName(e.target.value)} placeholder={"Nom de la recette..."} className={"m-2 w-[95%] focus:outline-none"}/>
+                        {error.length > 0 && (
+                            <div className="text-normal text-red-500 ">{error}</div>
+                        )}
                     </div>
                     <div>
                         {ingredientsSelected.map((ingredientSelected, key) =>
@@ -86,13 +93,6 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
                     </div>
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                    <button
-                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => handleClose()}
-                    >
-                        Fermer
-                    </button>
                     <button
                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
@@ -109,7 +109,7 @@ export const Recipe = ({title, buttonText, recipe, addRecipe, navBarClassName, i
                     </button>
                 </div>
             </Modal>
-            <FaHamburger onClick={handleOpen} className={"cursor-pointer modal-icons"}/>
+            <div onClick={handleOpen}>{children}</div>
         </>
     )
 }

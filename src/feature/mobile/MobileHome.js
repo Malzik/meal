@@ -9,10 +9,11 @@ import 'react-swipeable-list/dist/styles.css';
 import {MealSwipeableList} from "./components/SwipeableList";
 import {recipeApi} from "../../service/recipe";
 import {mealApi} from "../../service/meal";
+import {Ingredient} from "../home/components/ingredient/Ingredient";
+import {Recipe} from "../home/components/recipe/Recipe";
 
-export const MobileHome = () => {
+export const MobileHome = ({ingredients, recipes}) => {
     const [selectedDay, setSelectedDay] = useState(moment().format('DD-MM'))
-    const [recipes, setRecipes] = useState([])
     const [filteredRecipes, setFilteredRecipes] = useState([])
     const [meals, setMeals] = useState([])
     const [open, setOpen] = useState(false)
@@ -20,12 +21,9 @@ export const MobileHome = () => {
     const [order, setOrder] = useState(1)
 
     useEffect(() => {
-            mealApi.getMeals().then(meals => setMeals(meals))
-            recipeApi.getRecipes().then(recipes => {
-                setRecipes(recipes)
-                setFilteredRecipes(recipes)
-            })
-    }, [])
+        mealApi.getMeals().then(meals => setMeals(meals))
+        setFilteredRecipes(recipes)
+    }, [recipes])
 
     const addMeal = (recipe) => {
         mealApi
@@ -47,9 +45,8 @@ export const MobileHome = () => {
             .catch(e => console.log(e))
     }
 
-     const getMeals = () => {
+    const getMeals = () => {
         return meals.filter(meal => {
-            // console.log(meal.date,moment(meal.date).format('DD-MM'), selectedDay, moment(meal.date).format('DD-MM') === selectedDay)
             return moment(meal.date).format('DD-MM') === selectedDay
         })
     }
@@ -84,6 +81,7 @@ export const MobileHome = () => {
 
     return (
         <div className={"font-roboto m-2"}>
+            <Ingredient updateIngredients={() => {}} title={"Ajouter un ingrédient"} buttonText={"Ajouter"}><button>Ajouter</button></Ingredient>
             <DaySlider selectedDay={selectedDay} setSelectedDay={setSelectedDay}/>
             <h2 className={"text-[#ffaf64] text-2xl font-bold py-2"}>Mes recettes</h2>
             <MealSwipeableList meals={getMeals()} removeMeals={removeMeals}/>
@@ -101,10 +99,10 @@ export const MobileHome = () => {
                     </div>
                     <Carousel slides={filteredRecipes} addMeal={addMeal}/>
                 </div>
-                <div className={"flex justify-center pb-4 pt-2"}>
-                    <button className={"flex items-center text-gray-600"}>
-                        <FaPlusCircle/> <span className={"ml-1"}>Ajouter ma recette</span>
-                    </button>
+                <div className={"flex justify-center pb-4 pt-2 text-gray-600"}>
+                    <Recipe title={"Ajouter"} buttonText={"Ajouter"} addRecipe={() => {}} ingredients={ingredients}>
+                        <FaPlusCircle  className={"inline"}/><span className={"ml-1"}>Ajouter ma recette</span>
+                    </Recipe>
                 </div>
             </BottomSheet>
         </div>

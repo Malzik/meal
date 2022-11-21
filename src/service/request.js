@@ -1,6 +1,22 @@
 import {toast} from "react-hot-toast";
 import {getConfig} from "./config/config";
 
+const getCookie = cname => {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+const token = getCookie('token')
 const serverUrl = url => {
     const serverUrl = process.env.NODE_ENV === 'production' ? getConfig().url_prod : getConfig().url_dev;
 
@@ -10,7 +26,8 @@ const setRequestOptions = (method, body) => {
     return {
         method: method,
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(body)
     };
@@ -41,7 +58,7 @@ export const requestApi = {
     post: (url, body) =>
         new Promise((resolve, reject) => {
             fetch(serverUrl(url), setRequestOptions('POST', body))
-                .then(res => handleResponse(res, resolve, reject))
+                .then(res => handleResponse(res, resolve, reject, true))
                 .catch(err => handleResponse(err, resolve, reject))
         }),
     put: (url, body) =>

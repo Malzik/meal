@@ -1,6 +1,5 @@
 import { requestApi } from "./request";
 import {toast} from "react-hot-toast";
-
 export const ingredientApi = {
     getIngredients: () =>
         new Promise((resolve, reject) => {

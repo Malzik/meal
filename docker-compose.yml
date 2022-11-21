@@ -14,3 +14,5 @@ services:
       - "./volumes/log:/var/log"
     working_dir: /var/www
     command: npm start
+    labels:
+      - "traefik.http.routers.meal-front.rule=Host(`meal.localhost`)"

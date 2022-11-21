@@ -1,23 +1,8 @@
 import React, {useState} from "react";
-import {Ingredient} from "../ingredient/Ingredient";
-import {Recipe} from "../recipe/Recipe";
 import {NavLink} from "react-router-dom";
 
-export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
+export const Navbar = ({logout}) => {
     const [isOpen, setIsOpen] = useState(false);
-
-    const updateIngredients = (newIngredient, isNew = false) => {
-        if (isNew) {
-            setIngredients([...ingredients, newIngredient])
-            return
-        }
-        setIngredients(ingredients.map(ingredient => {
-            if (ingredient.id === newIngredient.id) {
-                ingredient.name = newIngredient.name
-            }
-            return ingredient
-        }))
-    }
 
     return (
         <nav className="bg-gray-800 mb-3">
@@ -36,6 +21,7 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
                                 <NavLink to="/" activeClassName="text-indigo-500" className={"navbar-title"}>Accueil</NavLink>
                                 <NavLink to="/ingredients" activeClassName="text-indigo-500" className={"navbar-title"}>Ingredients</NavLink>
                                 <NavLink to="/recipes" activeClassName="text-indigo-500" className={"navbar-title"}>Recette</NavLink>
+                                <NavLink to="/login" onClick={() => {logout();setIsOpen(false)}} className={"navbar-dropdown-title"}>Se déconnecter</NavLink>
                             </div>
                         </div>
                     </div>
@@ -87,9 +73,10 @@ export const Navbar = ({ingredients, setIngredients, recipes, setRecipes}) => {
             </div>
             <div className={isOpen ? "show" : "hidden"}>
                 <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <NavLink to="/" className={"navbar-dropdown-title"}>Accueil</NavLink>
-                    <NavLink to="/ingredients" className={"navbar-dropdown-title"}>Ingredients</NavLink>
-                    <NavLink to="/recipes" className={"navbar-dropdown-title"}>Recette</NavLink>
+                    <NavLink to="/" onClick={() => setIsOpen(false)} className={"navbar-dropdown-title"}>Accueil</NavLink>
+                    <NavLink to="/ingredients" onClick={() => setIsOpen(false)} className={"navbar-dropdown-title"}>Ingredients</NavLink>
+                    <NavLink to="/recipes" onClick={() => setIsOpen(false)} className={"navbar-dropdown-title"}>Recette</NavLink>
+                    <NavLink to="/login" onClick={() => {logout();setIsOpen(false)}} className={"navbar-dropdown-title"}>Se déconnecter</NavLink>
                 </div>
             </div>
         </nav>
