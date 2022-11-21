@@ -1,5 +1,7 @@
 # Meal Planner
 
+This project work with the traquenard-admin project
+
 ## Available Scripts
 
 In the project directory, you can run:
